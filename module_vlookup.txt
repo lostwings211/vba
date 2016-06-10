@@ -1,0 +1,18 @@
+Sub srch_Zhili()
+    Dim ws_master As Worksheet, ws_data As Worksheet
+    Set book_master = CreateObject("Excel.Application").Workbooks.Open("Z:\Just Good Food, LLC\MasterFile PNC.xlsx")
+    Set ws_master = book_master.Sheets("Sheet1")
+    Set ws_data = Sheets("V-lookup")
+    
+    On Error Resume Next
+    Dim i As Integer
+    i = 2
+    Do While (Len(ws_data.Cells(i, "D")) > 0)
+        curr_val = ws_data.Cells(i, "D")
+        curr_val_lookup = Application.WorksheetFunction.VLookup(curr_val, ws_master.Range("A:C"), 3, False)
+        ws_data.Cells(i, "G") = curr_val_lookup
+        i = i + 1 
+    Loop
+    MsgBox ("Done looking_up " & (i - 2) & " record(s)!")
+    On Error GoTo 0
+End Sub
